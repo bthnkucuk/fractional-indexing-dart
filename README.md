@@ -94,7 +94,8 @@ void main() {
 
 ### Languages
 
-This is a Dart port of the original JavaScript implementation by @rocicorp. That means that this implementation is byte-for-byte compatible with:
+This is a Dart port of the original JavaScript implementation by [@rocicorp](https://github.com/rocicorp). That means
+that this implementation is byte-for-byte compatible with:
 
 | Language | Repo |
 | -------- | ----------------------------------------------------- |
