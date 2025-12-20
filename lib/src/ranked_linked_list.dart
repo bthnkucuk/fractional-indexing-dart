@@ -180,10 +180,8 @@ final class RankedLinkedList<E extends RankedLinkedListEntry<E>> extends LinkedL
   /// Returns normally if insertion is successful.
   /// Throws [ArgumentError] if [entry.rank] is null.
   /// Throws [Exception] if an entry with the same rank already exists.
-  void addToRank(E entry) {
-    if (entry.rank == null) {
-      throw ArgumentError('addToRank requires the entry to have a non-null rank.');
-    }
+  void insert(String rank, E entry) {
+    entry.rank = rank;
 
     final searchList = indexedList;
 

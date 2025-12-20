@@ -68,7 +68,7 @@ void main() {
     print(entry);
   }
 
-  print('\n--- RankedLinkedList: addToRank (Binary Search) ---');
+  print('\n--- RankedLinkedList: insert (Binary Search) ---');
   final loadedList = RankedLinkedList<TodoEntry>();
   final items = [
     TodoEntry('3', 'C')..rank = 'a2',
@@ -77,7 +77,7 @@ void main() {
   ];
 
   for (final item in items) {
-    loadedList.addToRank(item);
+    loadedList.insert(item.rank!, item);
   }
 
   print('Loaded List (sorted):');

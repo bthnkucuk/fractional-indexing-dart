@@ -154,7 +154,7 @@ The list validates ranks on insertion relative to neighbors. If you try to inser
 
 ### Loading Existing Data
 
-When loading data from a database or other source where ranks are already defined, use `addToRank` to insert items in the correct position efficiently.
+When loading data from a database or other source where ranks are already defined, use `insert` to insert items in the correct position efficiently.
 
 ```dart
 final loadedList = RankedLinkedList<TodoEntry>();
@@ -166,13 +166,13 @@ final items = [
 
 // Items can be added in any order
 for (final item in items) {
-  loadedList.addToRank(item);
+  loadedList.insert(item.rank!, item);
 }
 
 // loadedList is now sorted: A, B, C
 ```
 
-`addToRank` utilizes **binary search** to efficiently calculate the insertion index (O(log N) search time), making it highly performant for inserting items into their correct sorted positions. It throws an `Exception` if a duplicate rank is encountered.
+`insert` utilizes **binary search** to efficiently calculate the insertion index (O(log N) search time), making it highly performant for inserting items into their correct sorted positions. It throws an `Exception` if a duplicate rank is encountered.
 
 ## Other Implementations
 

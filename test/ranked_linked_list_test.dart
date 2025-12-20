@@ -213,14 +213,14 @@ void main() {
       expect(() => list.validate(), throwsException);
     });
 
-    test('addToRank inserts at correct position', () {
+    test('insert at correct position', () {
       final e1 = TestEntry('A')..rank = 'b';
       final e3 = TestEntry('C')..rank = 'd';
       list.add(e1);
       list.add(e3);
 
       final e2 = TestEntry('B')..rank = 'c';
-      list.addToRank(e2);
+      list.insert(e2.rank!, e2);
 
       expect(list.toList(), equals([e1, e2, e3]));
       expect(e1.rank!.compareTo(e2.rank!) < 0, isTrue);
@@ -228,39 +228,34 @@ void main() {
 
       // Add to end
       final e4 = TestEntry('D')..rank = 'e';
-      list.addToRank(e4);
+      list.insert(e4.rank!, e4);
       expect(list.last, equals(e4));
 
       // Add to start
       final e0 = TestEntry('Start')..rank = 'a';
-      list.addToRank(e0);
+      list.insert(e0.rank!, e0);
       expect(list.first, equals(e0));
 
       list.validate();
     });
 
-    test('addToRank throws on duplicate rank', () {
+    test('insert throws on duplicate rank', () {
       final e1 = TestEntry('A')..rank = 'a';
       list.add(e1);
 
       final e2 = TestEntry('B')..rank = 'a';
-      expect(() => list.addToRank(e2), throwsException);
+      expect(() => list.insert(e2.rank!, e2), throwsException);
     });
 
-    test('addToRank throws if entry rank is null', () {
-      final e1 = TestEntry('A'); // rank is null
-      expect(() => list.addToRank(e1), throwsArgumentError);
-    });
-
-    test('addToRank works with empty list', () {
+    test('insert works with empty list', () {
       final e1 = TestEntry('A')..rank = 'a';
-      list.addToRank(e1);
+      list.insert(e1.rank!, e1);
       expect(list.length, 1);
       expect(list.first, equals(e1));
       list.validate();
     });
 
-    test('addToRank maintains sort order when adding items in random order', () {
+    test('insert maintains sort order when adding items in random order', () {
       final entries = [
         TestEntry('C')..rank = 'c',
         TestEntry('A')..rank = 'a',
@@ -270,7 +265,7 @@ void main() {
       ];
 
       for (final e in entries) {
-        list.addToRank(e);
+        list.insert(e.rank!, e);
       }
 
       list.validate();
