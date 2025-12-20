@@ -1,6 +1,6 @@
 import 'dart:collection';
 import 'package:collection/collection.dart';
-import 'package:fractional_indexing_dart/fractional_indexing_dart.dart' as findex;
+import 'package:fractional_indexing_dart/fractional_indexing_dart.dart';
 
 /// A mixin for entries in a [RankedLinkedList].
 ///
@@ -49,7 +49,7 @@ base mixin RankedLinkedListEntry<E extends RankedLinkedListEntry<E>> on LinkedLi
             'next rank ($nextRank) must be greater than.');
       }
     } else {
-      entry.rank = findex.generateKeyBetween(rank, next?.rank);
+      entry.rank = FractionalIndexing.generateKeyBetween(rank, next?.rank);
     }
 
     super.insertAfter(entry);
@@ -82,7 +82,7 @@ base mixin RankedLinkedListEntry<E extends RankedLinkedListEntry<E>> on LinkedLi
             'previous rank ($prevRank) must be greater than.');
       }
     } else {
-      entry.rank = findex.generateKeyBetween(previous?.rank, rank);
+      entry.rank = FractionalIndexing.generateKeyBetween(previous?.rank, rank);
     }
 
     super.insertBefore(entry);
@@ -138,7 +138,7 @@ final class RankedLinkedList<E extends RankedLinkedListEntry<E>> extends LinkedL
       }
     }
     super.addFirst(entry);
-    entry.rank ??= findex.generateKeyBetween(null, entry.next?.rank);
+    entry.rank ??= FractionalIndexing.generateKeyBetween(null, entry.next?.rank);
 
     markAsDirty();
   }
@@ -162,7 +162,7 @@ final class RankedLinkedList<E extends RankedLinkedListEntry<E>> extends LinkedL
       }
     }
     super.add(entry);
-    entry.rank ??= findex.generateKeyBetween(entry.previous?.rank, null);
+    entry.rank ??= FractionalIndexing.generateKeyBetween(entry.previous?.rank, null);
 
     markAsDirty();
   }

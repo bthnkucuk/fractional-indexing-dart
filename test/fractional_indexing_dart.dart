@@ -1,4 +1,4 @@
-import 'package:fractional_indexing_dart/fractional_indexing_dart.dart' as findex;
+import 'package:fractional_indexing_dart/fractional_indexing_dart.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -7,7 +7,7 @@ void main() {
     void testKeyBetween(String? a, String? b, String expected) {
       test('generateKeyBetween($a, $b) == $expected', () {
         try {
-          final result = findex.generateKeyBetween(a, b);
+          final result = FractionalIndexing.generateKeyBetween(a, b);
           expect(result, equals(expected));
         } catch (e) {
           expect(e.toString(), contains(expected));
@@ -48,7 +48,7 @@ void main() {
 
       void testN(String? a, String? b, int n, String expected) {
         try {
-          final result = findex.generateNKeysBetween(a, b, n, base10Digits).join(" ");
+          final result = FractionalIndexing.generateNKeysBetween(a, b, n, base10Digits).join(" ");
           expect(result, equals(expected));
         } catch (e) {
           expect(e.toString(), contains(expected));
@@ -67,7 +67,7 @@ void main() {
 
       void testBase95(String? a, String? b, String expected) {
         try {
-          final result = findex.generateKeyBetween(a, b, base95Digits);
+          final result = FractionalIndexing.generateKeyBetween(a, b, base95Digits);
           expect(result, equals(expected));
         } catch (e) {
           expect(e.toString(), contains(expected));

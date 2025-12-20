@@ -21,21 +21,21 @@ String generateKeyBetween(
 ```
 
 ```dart
-import 'package:fractional_indexing_dart/fractional_indexing_dart.dart' as findex;
+import 'package:fractional_indexing_dart/fractional_indexing_dart.dart' as FractionalIndexing;
 
-final first = findex.generateKeyBetween(null, null); // "a0"
+final first = FractionalIndexing.generateKeyBetween(null, null); // "a0"
 
 // Insert after 1st
-final second = findex.generateKeyBetween(first, null); // "a1"
+final second = FractionalIndexing.generateKeyBetween(first, null); // "a1"
 
 // Insert after 2nd
-final third = findex.generateKeyBetween(second, null); // "a2"
+final third = FractionalIndexing.generateKeyBetween(second, null); // "a2"
 
 // Insert before 1st
-final zeroth = findex.generateKeyBetween(null, first); // "Zz"
+final zeroth = FractionalIndexing.generateKeyBetween(null, first); // "Zz"
 
 // Insert in between 2nd and 3rd (midpoint)
-final secondAndHalf = findex.generateKeyBetween(second, third); // "a1V"
+final secondAndHalf = FractionalIndexing.generateKeyBetween(second, third); // "a1V"
 ```
 
 ### `generateNKeysBetween`
@@ -52,19 +52,19 @@ List<String> generateNKeysBetween(
 ```
 
 ```dart
-import 'package:fractional_indexing_dart/fractional_indexing_dart.dart' as findex;
+import 'package:fractional_indexing_dart/fractional_indexing_dart.dart';
 
-final first = findex.generateNKeysBetween(null, null, 2); // ['a0', 'a1']
+final first = FractionalIndexing.generateNKeysBetween(null, null, 2); // ['a0', 'a1']
 
 // Insert two keys after 2nd
-findex.generateNKeysBetween(first[1], null, 2); // ['a2', 'a3']
+FractionalIndexing.generateNKeysBetween(first[1], null, 2); // ['a2', 'a3']
 
 // Insert two keys before 1st
-findex.generateNKeysBetween(null, first[0], 2); // ['Zy', 'Zz']
+FractionalIndexing.generateNKeysBetween(null, first[0], 2); // ['Zy', 'Zz']
 
 // Insert two keys in between 1st and 2nd (midpoints)
 // Assuming second and third are defined as above
-findex.generateNKeysBetween(second, third, 2); // ['a0G', 'a0V']
+FractionalIndexing.generateNKeysBetween(second, third, 2); // ['a0G', 'a0V']
 ```
 
 ## Sorting
@@ -89,6 +89,90 @@ void main() {
   todos.sort((a, b) => a.fractionalIndex.compareTo(b.fractionalIndex));
 }
 ```
+
+## RankedLinkedList
+
+This package also provides a `RankedLinkedList` that automatically maintains the order of elements based on their fractional index. It extends Dart's `LinkedList` and ensures that elements remain sorted.
+
+### Usage
+
+First, create a class that mixes in `RankedLinkedListEntry`:
+
+```dart
+base class TodoEntry extends LinkedListEntry<TodoEntry>
+    with RankedLinkedListEntry<TodoEntry> {
+  final String id;
+  final String content;
+
+  TodoEntry(this.id, this.content);
+
+  @override
+  String toString() => '$id ($rank): $content';
+}
+```
+
+If your class already extends another class, you can apply both as mixins:
+
+```dart
+base class TodoEntry extends MyBaseClass
+    with LinkedListEntry<TodoEntry>, RankedLinkedListEntry<TodoEntry> {
+  // ...
+}
+```
+
+Then you can use `RankedLinkedList` to manage your items:
+
+```dart
+final list = RankedLinkedList<TodoEntry>();
+
+// Add items - ranks are automatically generated if not provided
+final todo1 = TodoEntry('1', 'Buy milk');
+list.add(todo1); // Rank: "a0"
+
+final todo3 = TodoEntry('3', 'Walk the dog');
+list.add(todo3); // Rank: "a1"
+
+// Insert between items
+final todo2 = TodoEntry('2', 'Clean room');
+todo1.insertAfter(todo2); // Rank: "a0V"
+
+// Iterate
+for (final todo in list) {
+  print(todo);
+}
+
+// Access by index (efficiently cached)
+print(list[1]); // todo2
+```
+
+The list validates ranks on insertion relative to neighbors. If you try to insert an item with a rank that violates the order, it will throw an `ArgumentError`.
+
+```dart
+// Throws ArgumentError because "a0" is not greater than "a1"
+// list.add(TodoEntry('4', 'Invalid')..rank = "a0");
+```
+
+### Loading Existing Data
+
+When loading data from a database or other source where ranks are already defined, use `addToRank` to insert items in the correct position efficiently.
+
+```dart
+final loadedList = RankedLinkedList<TodoEntry>();
+final items = [
+  TodoEntry('3', 'C')..rank = 'a2',
+  TodoEntry('1', 'A')..rank = 'a0',
+  TodoEntry('2', 'B')..rank = 'a1',
+];
+
+// Items can be added in any order
+for (final item in items) {
+  loadedList.addToRank(item);
+}
+
+// loadedList is now sorted: A, B, C
+```
+
+`addToRank` utilizes **binary search** to efficiently calculate the insertion index (O(log N) search time), making it highly performant for inserting items into their correct sorted positions. It throws an `Exception` if a duplicate rank is encountered.
 
 ## Other Implementations
 
