@@ -21,7 +21,7 @@ String generateKeyBetween(
 ```
 
 ```dart
-import 'package:fractional_indexing_dart/fractional_indexing_dart.dart' as FractionalIndexing;
+import 'package:fractional_indexing_dart/fractional_indexing_dart.dart';
 
 final first = FractionalIndexing.generateKeyBetween(null, null); // "a0"
 
