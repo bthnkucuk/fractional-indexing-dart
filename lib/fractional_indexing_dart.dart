@@ -4,3 +4,4 @@
 library;
 
 export 'src/fractional_indexing.dart';
+export 'src/ranked_linked_list.dart';

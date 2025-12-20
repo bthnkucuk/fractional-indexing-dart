@@ -91,7 +91,7 @@ void validateOrderKey(String key, String digits) {
   }
 }
 
-// note that this may return null, as there is a largest integer
+/// note that this may return null, as there is a largest integer
 String? incrementInteger(String x, String digits) {
   validateInteger(x);
   final digs = x.split('');
@@ -132,7 +132,7 @@ String? incrementInteger(String x, String digits) {
   }
 }
 
-// note that this may return null, as there is a smallest integer
+/// note that this may return null, as there is a smallest integer
 String? decrementInteger(String x, String digits) {
   validateInteger(x);
   final headChar = x[0];
@@ -167,11 +167,11 @@ String? decrementInteger(String x, String digits) {
   }
 }
 
-// `a` is an order key or null (START).
-// `b` is an order key or null (END).
-// `a < b` lexicographically if both are non-null.
-// digits is a string such as '0123456789' for base 10. Digits must be in
-// ascending character code order!
+/// `a` is an order key or null (START).
+/// `b` is an order key or null (END).
+/// `a < b` lexicographically if both are non-null.
+/// digits is a string such as '0123456789' for base 10. Digits must be in
+/// ascending character code order!
 String generateKeyBetween(String? a, String? b, [String digits = base62Digits]) {
   if (a != null) {
     validateOrderKey(a, digits);
