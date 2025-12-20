@@ -11,10 +11,6 @@ topics:
   - crdt
   - indexing
   - list-ordering
-  - real-time
-  - data-structures
-  - collaborative
-  - productivity
 
 environment:
   sdk: ^3.10.3
