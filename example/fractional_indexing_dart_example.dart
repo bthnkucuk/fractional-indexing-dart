@@ -86,4 +86,15 @@ void main() {
   for (final entry in loadedList) {
     print(entry);
   }
+
+  print('\n--- RankedLinkedList: getByRank (Binary Search) ---');
+  // Find entry by rank using efficient binary search
+  final foundEntry = loadedList.getByRank('a1');
+  print('Found entry with rank "a1": $foundEntry'); // 2 (a1): B
+
+  final notFound = loadedList.getByRank('z99');
+  print('Entry with rank "z99": $notFound'); // null
+
+  // getByRank is O(log N) - efficient even for large lists
+  print('Searching in list of ${loadedList.length} items');
 }

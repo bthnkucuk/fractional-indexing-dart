@@ -275,5 +275,92 @@ void main() {
       final ids = list.map((e) => e.id).toList();
       expect(ids, equals(['A', 'B', 'C', 'D', 'E']));
     });
+
+    group('getByRank', () {
+      test('returns entry when rank exists', () {
+        final e1 = TestEntry('A')..rank = 'a';
+        final e2 = TestEntry('B')..rank = 'b';
+        final e3 = TestEntry('C')..rank = 'c';
+
+        list.add(e1);
+        list.add(e2);
+        list.add(e3);
+
+        expect(list.getByRank('a'), equals(e1));
+        expect(list.getByRank('b'), equals(e2));
+        expect(list.getByRank('c'), equals(e3));
+      });
+
+      test('returns null when rank does not exist', () {
+        final e1 = TestEntry('A')..rank = 'a';
+        final e2 = TestEntry('B')..rank = 'b';
+
+        list.add(e1);
+        list.add(e2);
+
+        expect(list.getByRank('z'), isNull);
+        expect(list.getByRank('x'), isNull);
+        expect(list.getByRank(''), isNull);
+      });
+
+      test('returns null for empty list', () {
+        expect(list.getByRank('a'), isNull);
+      });
+
+      test('works with single entry', () {
+        final e1 = TestEntry('A')..rank = 'a';
+        list.add(e1);
+
+        expect(list.getByRank('a'), equals(e1));
+        expect(list.getByRank('b'), isNull);
+      });
+
+      test('works with many entries', () {
+        final entries = [
+          TestEntry('A')..rank = 'a',
+          TestEntry('B')..rank = 'b',
+          TestEntry('C')..rank = 'c',
+          TestEntry('D')..rank = 'd',
+          TestEntry('E')..rank = 'e',
+          TestEntry('F')..rank = 'f',
+          TestEntry('G')..rank = 'g',
+        ];
+
+        for (final e in entries) {
+          list.add(e);
+        }
+
+        // Test finding entries at different positions
+        expect(list.getByRank('a'), equals(entries[0]));
+        expect(list.getByRank('d'), equals(entries[3]));
+        expect(list.getByRank('g'), equals(entries[6]));
+
+        // Test non-existent ranks
+        expect(list.getByRank('z'), isNull);
+        expect(list.getByRank('0'), isNull);
+      });
+
+      test('handles ranks inserted in random order', () {
+        final entries = [
+          TestEntry('C')..rank = 'c',
+          TestEntry('A')..rank = 'a',
+          TestEntry('E')..rank = 'e',
+          TestEntry('B')..rank = 'b',
+          TestEntry('D')..rank = 'd',
+        ];
+
+        // Insert in random order
+        for (final e in entries) {
+          list.insert(e.rank!, e);
+        }
+
+        // Should still find all entries correctly
+        expect(list.getByRank('a'), equals(entries[1]));
+        expect(list.getByRank('b'), equals(entries[3]));
+        expect(list.getByRank('c'), equals(entries[0]));
+        expect(list.getByRank('d'), equals(entries[4]));
+        expect(list.getByRank('e'), equals(entries[2]));
+      });
+    });
   });
 }

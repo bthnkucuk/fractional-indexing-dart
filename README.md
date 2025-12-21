@@ -174,6 +174,31 @@ for (final item in items) {
 
 `insert` utilizes **binary search** to efficiently calculate the insertion index (O(log N) search time), making it highly performant for inserting items into their correct sorted positions. It throws an `Exception` if a duplicate rank is encountered.
 
+### Finding Entries by Rank
+
+You can efficiently find an entry by its rank using `getByRank`, which also uses binary search for O(log N) performance:
+
+```dart
+final list = RankedLinkedList<TodoEntry>();
+final todo1 = TodoEntry('1', 'Buy milk')..rank = 'a0';
+final todo2 = TodoEntry('2', 'Clean room')..rank = 'a1';
+final todo3 = TodoEntry('3', 'Walk the dog')..rank = 'a2';
+
+list.add(todo1);
+list.add(todo2);
+list.add(todo3);
+
+// Find entry by rank
+final found = list.getByRank('a1');
+print(found); // 2 (a1): Clean room
+
+// Returns null if rank doesn't exist
+final notFound = list.getByRank('z99');
+print(notFound); // null
+```
+
+`getByRank` uses binary search on the cached indexed list, making it efficient even for large lists.
+
 ## Other Implementations
 
 ### Languages
@@ -181,11 +206,10 @@ for (final item in items) {
 This is a Dart port of the original JavaScript implementation by [@rocicorp](https://github.com/rocicorp). That means
 that this implementation is byte-for-byte compatible with:
 
-| Language | Repo |
-| -------- | ----------------------------------------------------- |
-| JavaScript | https://github.com/rocicorp/fractional-indexing |
-| Go | https://github.com/rocicorp/fracdex |
-| Python | https://github.com/httpie/fractional-indexing-python |
-| Kotlin | https://github.com/darvelo/fractional-indexing-kotlin |
-| Ruby | https://github.com/kazu-2020/fractional_indexer |
-
+| Language   | Repo                                                  |
+| ---------- | ----------------------------------------------------- |
+| JavaScript | https://github.com/rocicorp/fractional-indexing       |
+| Go         | https://github.com/rocicorp/fracdex                   |
+| Python     | https://github.com/httpie/fractional-indexing-python  |
+| Kotlin     | https://github.com/darvelo/fractional-indexing-kotlin |
+| Ruby       | https://github.com/kazu-2020/fractional_indexer       |

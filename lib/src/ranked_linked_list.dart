@@ -221,6 +221,33 @@ final class RankedLinkedList<E extends RankedLinkedListEntry<E>>
     }
   }
 
+  /// Returns the entry with the specific [rank], or null if not found.
+  ///
+  /// Uses binary search on the cached [indexedList].
+  /// Time Complexity: O(log N)
+  E? getByRank(String rank) {
+    final searchList = indexedList;
+    int min = 0;
+    int max = searchList.length - 1;
+
+    while (min <= max) {
+      final mid = min + ((max - min) >> 1);
+      final element = searchList[mid];
+
+      final comparison = element.rank!.compareTo(rank);
+
+      if (comparison == 0) {
+        return element;
+      } else if (comparison < 0) {
+        min = mid + 1;
+      } else {
+        max = mid - 1;
+      }
+    }
+
+    return null;
+  }
+
   /// Marks the list as "dirty", invalidating the cached indexed list.
   ///
   /// This should be called whenever the list structure or element ranks change.

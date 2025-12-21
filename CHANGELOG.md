@@ -1,3 +1,10 @@
+## 1.0.7
+
+- **FEATURE**: Added `getByRank` method to `RankedLinkedList` for efficient O(log N) lookup of entries by rank using binary search.
+- Added comprehensive tests for `getByRank` covering various scenarios including empty lists, single entries, and large lists.
+- Added example usage of `getByRank` in the example file.
+- Added documentation for `getByRank` in README.md explaining its usage and performance characteristics.
+
 ## 1.0.6
 
 - **BREAKING**: Renamed `addToRank` method to `insert` in `RankedLinkedList` and updated its signature to accept rank directly.

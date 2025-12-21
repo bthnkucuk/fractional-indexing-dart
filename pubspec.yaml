@@ -1,6 +1,6 @@
 name: fractional_indexing_dart
 description: A Dart implementation of fractional indexing for efficient list ordering and reordering without large-scale updates. Ideal for CRDTs and real-time apps.
-version: 1.0.6
+version: 1.0.7
 homepage: https://github.com/bthnkucuk/fractional-indexing-dart
 repository: https://github.com/bthnkucuk/fractional-indexing-dart
 issue_tracker: https://github.com/bthnkucuk/fractional-indexing-dart/issues
