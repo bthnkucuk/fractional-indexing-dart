@@ -6,7 +6,8 @@ import 'package:fractional_indexing_dart/fractional_indexing_dart.dart';
 ///
 /// This mixin adds a [rank] property to the entry and overrides insertion methods
 /// to ensure that the list remains sorted by rank.
-base mixin RankedLinkedListEntry<E extends RankedLinkedListEntry<E>> on LinkedListEntry<E> {
+base mixin RankedLinkedListEntry<E extends RankedLinkedListEntry<E>>
+    on LinkedListEntry<E> {
   String? _rank;
 
   String? get rank => _rank;
@@ -40,12 +41,14 @@ base mixin RankedLinkedListEntry<E extends RankedLinkedListEntry<E>> on LinkedLi
       final nextRank = next?.rank;
 
       if (entryRank.compareTo(currentRank) <= 0) {
-        throw ArgumentError('Invalid Rank: insertAfter when entry.rank ($entryRank), '
+        throw ArgumentError(
+            'Invalid Rank: insertAfter when entry.rank ($entryRank), '
             'current rank ($currentRank) must be greater than.');
       }
 
       if (nextRank != null && entryRank.compareTo(nextRank) >= 0) {
-        throw ArgumentError('Invalid Rank: insertAfter when entry.rank ($entryRank), '
+        throw ArgumentError(
+            'Invalid Rank: insertAfter when entry.rank ($entryRank), '
             'next rank ($nextRank) must be greater than.');
       }
     } else {
@@ -73,12 +76,14 @@ base mixin RankedLinkedListEntry<E extends RankedLinkedListEntry<E>> on LinkedLi
       final prevRank = previous?.rank;
 
       if (entryRank.compareTo(currentRank) >= 0) {
-        throw ArgumentError('Invalid Rank: insertBefore when entry.rank ($entryRank), '
+        throw ArgumentError(
+            'Invalid Rank: insertBefore when entry.rank ($entryRank), '
             'current rank ($currentRank) must be less than.');
       }
 
       if (prevRank != null && entryRank.compareTo(prevRank) <= 0) {
-        throw ArgumentError('Invalid Rank: insertBefore when entry.rank ($entryRank), '
+        throw ArgumentError(
+            'Invalid Rank: insertBefore when entry.rank ($entryRank), '
             'previous rank ($prevRank) must be greater than.');
       }
     } else {
@@ -101,7 +106,8 @@ base mixin RankedLinkedListEntry<E extends RankedLinkedListEntry<E>> on LinkedLi
 ///
 /// When elements are added without a rank, a rank is automatically generated using fractional indexing.
 /// If a rank is provided, it is validated against the surrounding elements to ensure order.
-final class RankedLinkedList<E extends RankedLinkedListEntry<E>> extends LinkedList<E> {
+final class RankedLinkedList<E extends RankedLinkedListEntry<E>>
+    extends LinkedList<E> {
   /// Validates that the list is strictly sorted by rank.
   ///
   /// Throws [Exception] if any element is out of order.
@@ -132,13 +138,15 @@ final class RankedLinkedList<E extends RankedLinkedListEntry<E>> extends LinkedL
         final currentHeadRank = first.rank!;
 
         if (entry.rank!.compareTo(currentHeadRank) >= 0) {
-          throw ArgumentError('Invalid Rank for addFirst: entry.rank (${entry.rank}) must be smaller '
+          throw ArgumentError(
+              'Invalid Rank for addFirst: entry.rank (${entry.rank}) must be smaller '
               'than current first.rank ($currentHeadRank).');
         }
       }
     }
     super.addFirst(entry);
-    entry.rank ??= FractionalIndexing.generateKeyBetween(null, entry.next?.rank);
+    entry.rank ??=
+        FractionalIndexing.generateKeyBetween(null, entry.next?.rank);
 
     markAsDirty();
   }
@@ -156,13 +164,15 @@ final class RankedLinkedList<E extends RankedLinkedListEntry<E>> extends LinkedL
       if (isNotEmpty) {
         final currentTailRank = last.rank!;
         if (entry.rank!.compareTo(currentTailRank) <= 0) {
-          throw ArgumentError('Invalid Rank for add/addLast: entry.rank (${entry.rank}) must be greater '
+          throw ArgumentError(
+              'Invalid Rank for add/addLast: entry.rank (${entry.rank}) must be greater '
               'than current last.rank ($currentTailRank).');
         }
       }
     }
     super.add(entry);
-    entry.rank ??= FractionalIndexing.generateKeyBetween(entry.previous?.rank, null);
+    entry.rank ??=
+        FractionalIndexing.generateKeyBetween(entry.previous?.rank, null);
 
     markAsDirty();
   }
@@ -195,7 +205,8 @@ final class RankedLinkedList<E extends RankedLinkedListEntry<E>> extends LinkedL
       return;
     }
 
-    final index = lowerBound(searchList, entry, compare: (a, b) => a.rank!.compareTo(b.rank!));
+    final index = lowerBound(searchList, entry,
+        compare: (a, b) => a.rank!.compareTo(b.rank!));
 
     if (index < searchList.length) {
       final existingEntry = searchList[index];

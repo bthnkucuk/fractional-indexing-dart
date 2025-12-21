@@ -3,7 +3,8 @@
 // This is based on https://observablehq.com/@dgreensp/implementing-fractional-indexing
 
 class FractionalIndexing {
-  static const String base62Digits = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+  static const String base62Digits =
+      "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
   /// `a` may be empty string, `b` is null or non-empty string.
   /// `a < b` lexicographically if `b` is non-null.
@@ -28,7 +29,9 @@ class FractionalIndexing {
         n++;
       }
       if (n > 0) {
-        return b.substring(0, n) + midpoint(a.length > n ? a.substring(n) : "", b.substring(n), digits);
+        return b.substring(0, n) +
+            midpoint(
+                a.length > n ? a.substring(n) : "", b.substring(n), digits);
       }
     }
     // first digits (or lack of digit) are different
@@ -48,7 +51,8 @@ class FractionalIndexing {
         // given, for example, midpoint('49', '5'), return
         // '4' + midpoint('9', null), which will become
         // '4' + '9' + midpoint('', null), which is '495'
-        return digits[digitA] + midpoint(a.length > 1 ? a.substring(1) : "", null, digits);
+        return digits[digitA] +
+            midpoint(a.length > 1 ? a.substring(1) : "", null, digits);
       }
     }
   }
@@ -96,7 +100,8 @@ class FractionalIndexing {
   static String? incrementInteger(String x, String digits) {
     validateInteger(x);
     final digs = x.split('');
-    digs.removeAt(0); // This modifies digs, which is what we want for 'head' extraction? No, split gives new list.
+    digs.removeAt(
+        0); // This modifies digs, which is what we want for 'head' extraction? No, split gives new list.
     // Actually in Dart split returns list. head is 0th index.
     // JS: const [head, ...digs] = x.split(""); head is first char, digs is the rest.
 
@@ -173,7 +178,8 @@ class FractionalIndexing {
   /// `a < b` lexicographically if both are non-null.
   /// digits is a string such as '0123456789' for base 10. Digits must be in
   /// ascending character code order!
-  static String generateKeyBetween(String? a, String? b, [String digits = base62Digits]) {
+  static String generateKeyBetween(String? a, String? b,
+      [String digits = base62Digits]) {
     if (a != null) {
       validateOrderKey(a, digits);
     }
@@ -234,7 +240,8 @@ class FractionalIndexing {
   /// If one or the other is null, returns consecutive "integer"
   /// keys. Otherwise, returns relatively short keys between
   /// a and b.
-  static List<String> generateNKeysBetween(String? a, String? b, int n, [String digits = base62Digits]) {
+  static List<String> generateNKeysBetween(String? a, String? b, int n,
+      [String digits = base62Digits]) {
     if (n == 0) {
       return [];
     }
@@ -262,6 +269,10 @@ class FractionalIndexing {
     }
     final mid = (n / 2).floor();
     final c = generateKeyBetween(a, b, digits);
-    return [...generateNKeysBetween(a, c, mid, digits), c, ...generateNKeysBetween(c, b, n - mid - 1, digits)];
+    return [
+      ...generateNKeysBetween(a, c, mid, digits),
+      c,
+      ...generateNKeysBetween(c, b, n - mid - 1, digits)
+    ];
   }
 }

@@ -2,7 +2,8 @@ import 'dart:collection';
 
 import 'package:fractional_indexing_dart/fractional_indexing_dart.dart';
 
-base class TodoEntry extends LinkedListEntry<TodoEntry> with RankedLinkedListEntry<TodoEntry> {
+base class TodoEntry extends LinkedListEntry<TodoEntry>
+    with RankedLinkedListEntry<TodoEntry> {
   final String id;
   final String content;
 
@@ -40,7 +41,8 @@ void main() {
   print('Generate 2 keys before Zeroth: $beforeZeroth'); // ['Zy', 'Zz']
 
   final midpoints = FractionalIndexing.generateNKeysBetween(second, third, 2);
-  print('Generate 2 keys between Second and Third: $midpoints'); // ['a1G', 'a1V']
+  print(
+      'Generate 2 keys between Second and Third: $midpoints'); // ['a1G', 'a1V']
 
   print('\n--- Comparison ---');
   final list = [second, first, third, secondAndHalf, zeroth];

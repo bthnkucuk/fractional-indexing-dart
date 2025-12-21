@@ -3,7 +3,8 @@ import 'package:test/test.dart';
 
 import 'dart:collection';
 
-final class TestEntry extends LinkedListEntry<TestEntry> with RankedLinkedListEntry<TestEntry> {
+final class TestEntry extends LinkedListEntry<TestEntry>
+    with RankedLinkedListEntry<TestEntry> {
   final String id;
   TestEntry(this.id);
 

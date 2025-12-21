@@ -34,10 +34,14 @@ void main() {
     testKeyBetween("Zz", "a01", "a0");
     testKeyBetween(null, "a0V", "a0");
     testKeyBetween(null, "b999", "b99");
-    testKeyBetween(null, "A00000000000000000000000000", "invalid order key: A00000000000000000000000000");
-    testKeyBetween(null, "A000000000000000000000000001", "A000000000000000000000000000V");
-    testKeyBetween("zzzzzzzzzzzzzzzzzzzzzzzzzzy", null, "zzzzzzzzzzzzzzzzzzzzzzzzzzz");
-    testKeyBetween("zzzzzzzzzzzzzzzzzzzzzzzzzzz", null, "zzzzzzzzzzzzzzzzzzzzzzzzzzzV");
+    testKeyBetween(null, "A00000000000000000000000000",
+        "invalid order key: A00000000000000000000000000");
+    testKeyBetween(
+        null, "A000000000000000000000000001", "A000000000000000000000000000V");
+    testKeyBetween(
+        "zzzzzzzzzzzzzzzzzzzzzzzzzzy", null, "zzzzzzzzzzzzzzzzzzzzzzzzzzz");
+    testKeyBetween(
+        "zzzzzzzzzzzzzzzzzzzzzzzzzzz", null, "zzzzzzzzzzzzzzzzzzzzzzzzzzzV");
     testKeyBetween("a00", null, "invalid order key: a00");
     testKeyBetween("a00", "a1", "invalid order key: a00");
     testKeyBetween("0", "1", "invalid order key head: 0");
@@ -48,7 +52,9 @@ void main() {
 
       void testN(String? a, String? b, int n, String expected) {
         try {
-          final result = FractionalIndexing.generateNKeysBetween(a, b, n, base10Digits).join(" ");
+          final result =
+              FractionalIndexing.generateNKeysBetween(a, b, n, base10Digits)
+                  .join(" ");
           expect(result, equals(expected));
         } catch (e) {
           expect(e.toString(), contains(expected));
@@ -58,7 +64,8 @@ void main() {
       testN(null, null, 5, "a0 a1 a2 a3 a4");
       testN("a4", null, 10, "a5 a6 a7 a8 a9 b00 b01 b02 b03 b04");
       testN(null, "a0", 5, "Z5 Z6 Z7 Z8 Z9");
-      testN("a0", "a2", 20, "a01 a02 a03 a035 a04 a05 a06 a07 a08 a09 a1 a11 a12 a13 a14 a15 a16 a17 a18 a19");
+      testN("a0", "a2", 20,
+          "a01 a02 a03 a035 a04 a05 a06 a07 a08 a09 a1 a11 a12 a13 a14 a15 a16 a17 a18 a19");
     });
 
     test('generateKeyBetween base 95 tests', () {
@@ -67,7 +74,8 @@ void main() {
 
       void testBase95(String? a, String? b, String expected) {
         try {
-          final result = FractionalIndexing.generateKeyBetween(a, b, base95Digits);
+          final result =
+              FractionalIndexing.generateKeyBetween(a, b, base95Digits);
           expect(result, equals(expected));
         } catch (e) {
           expect(e.toString(), contains(expected));
@@ -80,13 +88,15 @@ void main() {
       testBase95("a ", null, "a!");
       testBase95(null, "a ", "Z~");
       testBase95("a0 ", "a0!", "invalid order key: a0 ");
-      testBase95(null, "A                          0", "A                          (");
+      testBase95(
+          null, "A                          0", "A                          (");
       testBase95("a~", null, "b  ");
       testBase95("Z~", null, "a ");
       testBase95("b   ", null, "invalid order key: b   ");
       testBase95("a0", "a0V", "a0;");
       testBase95("a  1", "a  2", "a  1P");
-      testBase95(null, "A                          ", "invalid order key: A                          ");
+      testBase95(null, "A                          ",
+          "invalid order key: A                          ");
     });
   });
 }
